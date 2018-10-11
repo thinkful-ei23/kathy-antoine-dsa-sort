@@ -1,4 +1,4 @@
-const numArr = [
+const numArr1 = [
   89,
   30,
   25,
@@ -101,13 +101,26 @@ const numArr = [
   5
 ];
 
+const numArr = [89,
+  30,
+  25,
+  32,
+  72,
+  14,
+  11,
+  29,
+  70,];
+
+let count = 0;
 const swap = (array, i, j) => {
+
   const tmp = array[i];
   array[i] = array[j];
   array[j] = tmp;
 };
 
 const qSort = (array, start = 0, end = array.length) => {
+  count++;
   if (start >= end) {
     return array;
   }
@@ -131,14 +144,19 @@ const partition = (array, start, end) => {
   return j;
 };
 
-// console.log(qSort(numArr));
+qSort(numArr);
+console.log(count, "Count Vlad")
 //==========================
+let countMSort = 0;
+let countMerge = 0;
 
 const mSort = (array) => {
+  countMSort++
   if (array.length <= 1) {
     return array;
   }
   const middle = Math.floor(array.length / 2);
+
   let left = array.slice(0, middle);
   let right = array.slice(middle, array.length);
 
@@ -147,6 +165,8 @@ const mSort = (array) => {
   return merge(left, right, array);
 }
 const merge = (left, right, array) => {
+
+
   let leftIndex = 0;
   let rightIndex = 0;
   let outputIndex = 0;
@@ -168,4 +188,7 @@ const merge = (left, right, array) => {
   return array;
 };
 
-console.log(mSort(numArr));
+mSort(numArr);
+console.log(countMSort, "Count Chocular")
+
+
