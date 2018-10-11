@@ -1,4 +1,4 @@
-const numArr = [
+const numArr1 = [
   89,
   30,
   25,
@@ -101,7 +101,9 @@ const numArr = [
   5
 ];
 
-// QUICK SORT
+const numArr = [89, 30, 25, 32, 72, 14, 11, 29, 70];
+
+let count = 0;
 const swap = (array, i, j) => {
   const tmp = array[i];
   array[i] = array[j];
@@ -109,6 +111,7 @@ const swap = (array, i, j) => {
 };
 
 const qSort = (array, start = 0, end = array.length) => {
+  count++;
   if (start >= end) {
     return array;
   }
@@ -136,16 +139,19 @@ const partition = (array, start, end) => {
   return j;
 };
 
-// console.log(qSort(numArr));
+qSort(numArr);
+console.log(count, 'Count Vlad');
+//==========================
+let countMSort = 0;
+let countMerge = 0;
 
-//========================================================================================================
-
-// MERGE SORT
 const mSort = array => {
+  countMSort++;
   if (array.length <= 1) {
     return array;
   }
   const middle = Math.floor(array.length / 2);
+
   let left = array.slice(0, middle);
   let right = array.slice(middle, array.length);
 
@@ -174,8 +180,8 @@ const merge = (left, right, array) => {
   return array;
 };
 
-// console.log(mSort(numArr));
-
+mSort(numArr);
+console.log(countMSort, 'Count Chocular');
 //========================================================================================================
 
 // BUCKET SORT
@@ -216,7 +222,9 @@ const bucketSort = (array, bucketSize) => {
 
   // Initializing buckets
   let bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1;
+  console.log('BUCKET COUNT:', bucketCount);
   let allBuckets = new Array(bucketCount);
+  console.log('ALL BUCKETS:', allBuckets);
 
   for (i = 0; i < allBuckets.length; i++) {
     allBuckets[i] = [];
@@ -227,6 +235,7 @@ const bucketSort = (array, bucketSize) => {
     allBuckets[Math.floor((currentVal - minValue) / bucketSize)].push(
       currentVal
     );
+    console.log('BUCKETS PUSHED:', allBuckets);
   });
 
   // Sorting buckets
@@ -237,9 +246,9 @@ const bucketSort = (array, bucketSize) => {
     bucket.forEach(function(element) {
       array.push(element);
     });
+    console.log('SORTED BUCKET:', bucket);
   });
-
   return array;
 };
 
-console.log(bucketSort(numArr));
+console.log('THE WHOLE BUCKET:', bucketSort(numArr));
