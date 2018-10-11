@@ -139,8 +139,8 @@ const partition = (array, start, end) => {
   return j;
 };
 
-qSort(numArr);
-console.log(count, 'Count Vlad');
+// qSort(numArr);
+// console.log(count, 'Count Vlad');
 //==========================
 let countMSort = 0;
 let countMerge = 0;
@@ -180,8 +180,8 @@ const merge = (left, right, array) => {
   return array;
 };
 
-mSort(numArr);
-console.log(countMSort, 'Count Chocular');
+// mSort(numArr);
+// console.log(countMSort, 'Count Chocular');
 //========================================================================================================
 
 // BUCKET SORT
@@ -212,7 +212,7 @@ const bucketSort = (array, bucketSize) => {
   bucketSize = bucketSize || 5;
 
   // Setting min and max values
-  array.forEach(function(currentVal) {
+  array.forEach(function (currentVal) {
     if (currentVal < minValue) {
       minValue = currentVal;
     } else if (currentVal > maxValue) {
@@ -222,33 +222,76 @@ const bucketSort = (array, bucketSize) => {
 
   // Initializing buckets
   let bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1;
-  console.log('BUCKET COUNT:', bucketCount);
+  // console.log('BUCKET COUNT:', bucketCount);
   let allBuckets = new Array(bucketCount);
-  console.log('ALL BUCKETS:', allBuckets);
+  // console.log('ALL BUCKETS:', allBuckets);
 
   for (i = 0; i < allBuckets.length; i++) {
     allBuckets[i] = [];
   }
 
   // Pushing values to buckets
-  array.forEach(function(currentVal) {
+  array.forEach(function (currentVal) {
     allBuckets[Math.floor((currentVal - minValue) / bucketSize)].push(
       currentVal
     );
-    console.log('BUCKETS PUSHED:', allBuckets);
+    // console.log('BUCKETS PUSHED:', allBuckets);
   });
 
   // Sorting buckets
   array.length = 0;
 
-  allBuckets.forEach(function(bucket) {
+  allBuckets.forEach(function (bucket) {
     insertionSort(bucket);
-    bucket.forEach(function(element) {
+    bucket.forEach(function (element) {
       array.push(element);
     });
-    console.log('SORTED BUCKET:', bucket);
+    // console.log('SORTED BUCKET:', bucket);
   });
   return array;
 };
 
-console.log('THE WHOLE BUCKET:', bucketSort(numArr));
+// console.log('THE WHOLE BUCKET:', bucketSort(numArr));
+
+
+// =============== SORT in place
+// find [0]
+// compare to [1]
+// 1st shuffle to left of [0] or pivot?
+// [1] = newCurrent
+// 2nd shuffle to right of [1] or pivot or array.length -1, or array.length(randomizer)
+console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+const shuffle = (arr) => {
+  if (arr.length <= 1) {
+    return arr;
+  }
+  const middle = Math.floor(arr.length / 2);
+
+  let left = arr.slice(0, middle);
+  let right = arr.slice(middle, arr.length);
+  // console.log(left, "I left my wife and 49 kids");
+  // console.log(right, "the old gray mare and the peanut stand");
+  left = shuffle(left);
+  right = shuffle(right);
+  left = Math.floor(Math.random() * 4) + 1;
+  right = Math.floor(Math.random() * 4) + 1;
+  console.log(left, right, "Do you think I did right?");
+
+  return (left, right);
+};
+console.log(shuffle(numArr), "Happy Birthday")
+// for (let i = 0; i < arr.length - 1; i++) {
+//   let arrIndex = arr[i];
+//   arrIndex = (Math.random() * 4) + 1;
+// }
+// return arr;
+// }
+// arr[0] = Math.floor(Math.random() * 4) + 1;
+// stats = {}
+// for (let n = 0; n < 240000; n++) {
+//   const arr = [1, 2, 3, 4];
+//   shuffle(arr);
+//   stats[arr] = (stats[arr] | 0) + 1;
+// }
+// console.log(shuffle(numArr), "shuffle board anyone?")
+// console.log(stats)
