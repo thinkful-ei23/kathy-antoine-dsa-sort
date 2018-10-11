@@ -101,6 +101,7 @@ const numArr = [
   5
 ];
 
+// QUICK SORT
 const swap = (array, i, j) => {
   const tmp = array[i];
   array[i] = array[j];
@@ -119,22 +120,28 @@ const qSort = (array, start = 0, end = array.length) => {
 };
 
 const partition = (array, start, end) => {
+  let swaps = 0;
+  console.log('Counter:', swaps);
   const pivot = array[end - 1];
   let j = start;
   for (let i = start; i < end - 1; i++) {
     if (array[i] <= pivot) {
       swap(array, i, j);
       j++;
+      swaps++;
     }
   }
   swap(array, end - 1, j);
+  swaps++;
   return j;
 };
 
 // console.log(qSort(numArr));
-//==========================
 
-const mSort = (array) => {
+//========================================================================================================
+
+// MERGE SORT
+const mSort = array => {
   if (array.length <= 1) {
     return array;
   }
@@ -145,7 +152,7 @@ const mSort = (array) => {
   left = mSort(left);
   right = mSort(right);
   return merge(left, right, array);
-}
+};
 const merge = (left, right, array) => {
   let leftIndex = 0;
   let rightIndex = 0;
@@ -154,8 +161,7 @@ const merge = (left, right, array) => {
   while (leftIndex < left.length && rightIndex < right.length) {
     if (left[leftIndex] < right[rightIndex]) {
       array[outputIndex++] = left[leftIndex++];
-    }
-    else {
+    } else {
       array[outputIndex++] = right[rightIndex++];
     }
   }
@@ -168,4 +174,72 @@ const merge = (left, right, array) => {
   return array;
 };
 
-console.log(mSort(numArr));
+// console.log(mSort(numArr));
+
+//========================================================================================================
+
+// BUCKET SORT
+// InsertionSort to be used within bucket sort
+const insertionSort = array => {
+  let length = array.length;
+
+  for (let i = 1; i < length; i++) {
+    let temp = array[i];
+    for (var j = i - 1; j >= 0 && array[j] > temp; j--) {
+      array[j + 1] = array[j];
+    }
+    array[j + 1] = temp;
+  }
+
+  return array;
+};
+
+// Implement bucket sort
+const bucketSort = (array, bucketSize) => {
+  if (array.length === 0) {
+    return array;
+  }
+
+  let i;
+  let minValue = array[0];
+  let maxValue = array[0];
+  bucketSize = bucketSize || 5;
+
+  // Setting min and max values
+  array.forEach(function(currentVal) {
+    if (currentVal < minValue) {
+      minValue = currentVal;
+    } else if (currentVal > maxValue) {
+      maxValue = currentVal;
+    }
+  });
+
+  // Initializing buckets
+  let bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1;
+  let allBuckets = new Array(bucketCount);
+
+  for (i = 0; i < allBuckets.length; i++) {
+    allBuckets[i] = [];
+  }
+
+  // Pushing values to buckets
+  array.forEach(function(currentVal) {
+    allBuckets[Math.floor((currentVal - minValue) / bucketSize)].push(
+      currentVal
+    );
+  });
+
+  // Sorting buckets
+  array.length = 0;
+
+  allBuckets.forEach(function(bucket) {
+    insertionSort(bucket);
+    bucket.forEach(function(element) {
+      array.push(element);
+    });
+  });
+
+  return array;
+};
+
+console.log(bucketSort(numArr));
